@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { ScrollView, Text, Button } from "react-native";
-import SensorView from "./SensorView";
 import Torch from "react-native-torch";
+import SensorView from "./SensorView";
 
 const axis = ["x", "y", "z"];
 
@@ -21,15 +21,21 @@ export default class App extends Component {
         };
     }
 
-    _handleTorch = () => {
+    handleTorch = (value) => {
         const { isTorchOn } = this.state;
-        Torch.switchState(!isTorchOn);
-        this.setState({ isTorchOn: !isTorchOn });
+
+        if (!isTorchOn && value > 3) {
+            Torch.switchState(true);
+            this.setState({ isTorchOn: true });
+        } else if (isTorchOn && value <= 3) {
+            Torch.switchState(false);
+            this.setState({ isTorchOn: false });
+        }
     }
 
     render() {
         return (
-            <ScrollView>
+            <ScrollView onValueChange={ () => this.handleTorch(value)}>
                 {viewComponents.map((Comp, index) => <Comp key={index} />)}
                 <Button
                     onPress={this._handleTorch}

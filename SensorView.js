@@ -28,11 +28,16 @@ export default function(sensorName, values) {
             this.state = initialValue;
         }
 
+
         componentWillMount() {
             const subscription = sensor$.subscribe(values => {
                 this.setState({ ...values });
             });
             this.setState({ subscription });
+        }
+
+        componentDidUpdate() {
+            this.props.handleTorch(this.state.x);
         }
 
         componentWillUnmount() {
