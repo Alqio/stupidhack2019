@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import * as Sensors from "react-native-sensors";
+import {setUpdateIntervalForType, SensorTypes} from "react-native-sensors"
+
+setUpdateIntervalForType(SensorTypes.accelerometer, 400);
+setUpdateIntervalForType(SensorTypes.gyroscope, 400);
+
 
 const Value = ({ name, value }) => (
     <View style={styles.valueContainer}>
