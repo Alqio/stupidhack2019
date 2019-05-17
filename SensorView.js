@@ -5,7 +5,7 @@ import {setUpdateIntervalForType, SensorTypes} from "react-native-sensors"
 
 setUpdateIntervalForType(SensorTypes.accelerometer, 400);
 setUpdateIntervalForType(SensorTypes.gyroscope, 400);
-
+setUpdateIntervalForType(SensorTypes.magnetometer, 400);
 
 const Value = ({ name, value }) => (
     <View style={styles.valueContainer}>
@@ -29,6 +29,7 @@ export default function(sensorName, values) {
         }
 
         componentWillMount() {
+
             const subscription = sensor$.subscribe(values => {
                 this.setState({ ...values });
             });
@@ -39,9 +40,33 @@ export default function(sensorName, values) {
             this.state.subscription.unsubscribe();
             this.setState({ subscription: null });
         }
+        calculateRoll(Y, Z) {
+            return Math.atan2(Y, Z) * 180/Math.PI;
+
+        }
+        calculatePitch(X, Y, Z) {
+            return Math.atan2(-X, Math.sqrt(Y*Y + Z*Z)) * 180/Math.PI;
+        }
+
+        calculateYaw(X, Y, Z) {
+            return 180 * Math.atan(Z/Math.sqrt(X*X + Z*Z))/Math.PI;
+        }
 
         render() {
+            //console.log(this.state);
+            const {x, y, z} = this.state;
             return (
+                        /*
+                    */
+                <View>
+                    <Text>
+                        Pitch: {this.calculateRoll(y, z)}
+                        Roll: {this.calculatePitch(x,y,z)}
+                        Yaw: {this.calculateYaw(x,y,z)}
+                    </Text>
+                </View>
+
+                /*
                 <View style={styles.container}>
                     <Text style={styles.headline}>{sensorName} values</Text>
                     {values.map(valueName => (
@@ -52,6 +77,8 @@ export default function(sensorName, values) {
                         />
                     ))}
                 </View>
+
+                 */
             );
         }
     };
