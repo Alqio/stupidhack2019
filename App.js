@@ -8,27 +8,56 @@
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
+//import { Gyroscope, Pedometer } from 'expo-sensors';
+//import { Gyroscope } from 'expo';
+import { Accelerometer } from "react-native-sensors";
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+const Value = ({name, value}) => (
+    <View style={styles.valueContainer}>
+      <Text style={styles.valueName}>{name}:</Text>
+      <Text style={styles.valueValue}>{new String(value).substr(0, 8)}</Text>
+    </View>
+)
 
-type Props = {};
-export default class App extends Component<Props> {
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {x: 0, y: 0, z: 0};
+  }
+
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
+        <View style={styles.container}>
+          <Text style={styles.headline}>
+            Accelerometer values
+          </Text>
+          <Value name="x" value={this.state.x} />
+          <Value name="y" value={this.state.y} />
+          <Value name="z" value={this.state.z} />
+        </View>
     );
   }
 }
 
+/*
+export default class App extends Component {
+  componentDidMount() {
+      Gyroscope.addListener((asd) => {
+          console.log("listener");
+          console.log(asd);
+      })
+  }
+
+    render() {
+    return (
+        <View style={styles.container}>
+            <Text>TESTITESTI</Text>
+        </View>
+    );
+  }
+}
+*/
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -36,10 +65,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  welcome: {
-    fontSize: 20,
+  headline: {
+    fontSize: 30,
     textAlign: 'center',
     margin: 10,
+  },
+  valueContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  valueValue: {
+    width: 200,
+    fontSize: 20
+  },
+  valueName: {
+    width: 50,
+    fontSize: 20,
+    fontWeight: 'bold'
   },
   instructions: {
     textAlign: 'center',

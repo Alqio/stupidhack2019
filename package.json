@@ -7,8 +7,11 @@
     "test": "jest"
   },
   "dependencies": {
+    "expo": "^32.0.6",
+    "expo-sensors": "^4.0.0",
     "react": "16.8.3",
-    "react-native": "0.59.8"
+    "react-native": "0.59.8",
+    "react-native-sensors": "^5.1.8"
   },
   "devDependencies": {
     "@babel/core": "7.4.4",
