@@ -22,7 +22,17 @@ const Value = ({name, value}) => (
 export default class App extends Component {
   constructor(props) {
     super(props);
-
+/*
+    new Accelerometer({
+      updateInterval: 400 // defaults to 100ms
+    })
+        .then(observable => {
+          observable.subscribe(({x,y,z}) => this.setState({x,y,z}));
+        })
+        .catch(error => {
+          console.log("The sensor is not available");
+        });
+*/
     this.state = {x: 0, y: 0, z: 0};
   }
 
